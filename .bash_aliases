@@ -1,11 +1,12 @@
 alias ll='ls -AlFh'
-alias tree='tree -al'
+alias tree='tree -l'
 alias c='clear'
 alias update='sudo apt update && sudo apt full-upgrade -y'
 alias gui='sudo systemctl isolate graphical.target' # for set to boot gui as default: 'sudo systemctl set-default graphical.target'
 alias cli='sudo systemctl isolate multi-user.target'
 alias unlock='loginctl unlock-session 1' # for bugged KDE plasma
 
+#TODO usun take jesli jest juz zdefiniowane
 take() {
 	mkdir $1
 	cd $1

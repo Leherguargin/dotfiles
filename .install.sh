@@ -7,7 +7,8 @@ sudo apt full-upgrade -y
 sudo apt install man info vim curl wget tar gzip git stow nano tree 
 
 # zsh
-sudo apt install -y zsh
+#sudo apt install -y zsh # install zsh
+#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # install oh-my-zsh
 
 # tmux
 #TODO sudo apt install byobu -y
@@ -29,6 +30,9 @@ sudo apt install -y zsh
 #TODO
 
 # git config if you want (overwritting one from stow dotfiles)
-#git config --global user.email "maciejleszczynski1997@gmail.com"
-#git config --global user.name "Maciej Leszczynski"
-#git config --global init.defaultBranch main
+if [[ -f ~/.gitconfig ]]; then
+	git config --global user.email "maciejleszczynski1997@gmail.com"
+	git config --global user.name "Maciej Leszczynski"
+	git config --global init.defaultBranch main
+fi
+
