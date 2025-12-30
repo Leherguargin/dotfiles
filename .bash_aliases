@@ -6,11 +6,12 @@ alias gui='sudo systemctl isolate graphical.target' # for set to boot gui as def
 alias cli='sudo systemctl isolate multi-user.target'
 alias unlock='loginctl unlock-session 1' # for bugged KDE plasma
 
-#TODO usun take jesli jest juz zdefiniowane
-take() {
-	mkdir $1
-	cd $1
-}
+if [[ ! $(which zsh) ]]; then
+	take() {
+		mkdir $1
+		cd $1
+	}
+fi
 
 # clipboard managmant with klipper, xclip, xsel and wl-copy
 clip() {
@@ -46,6 +47,10 @@ clip() {
 readln() {
     grep "$1" | head -n 1
 }
+
+if [[ $(which tmux) ]]; then
+	alias t='tmux attach -t 0 || tmux new -s 0'
+fi
 
 #export PATH=~/dev/zig/zig-linux-x86_64-0.15.0-dev.276+9bbac4288:$PATH # zig-lang
 #export PATH=~/dev/go/go1.24.2.linux-amd64/go/bin:$PATH                # go-lang

@@ -4,14 +4,19 @@ sudo apt update
 sudo apt full-upgrade -y
 
 # utils
-sudo apt install man info vim curl wget tar gzip git stow nano tree 
+sudo apt install man info curl wget tar gzip git stow nano tree 
+#sudo apt install fzf # what is that? 
+#sudo apt install tee # what is that?
 
 # zsh
 #sudo apt install -y zsh # install zsh
 #sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # install oh-my-zsh
 
 # tmux
-#TODO sudo apt install byobu -y
+#TODO sudo apt install -y byobu # for now I dont use byobu
+if [[ ! $(which tmux) ]]; then
+	sudo apt install -y tmux
+fi
 
 # net-tools
 #TODO

@@ -71,9 +71,15 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	#docker
-	#extract
-	git
+#	docker
+#	extract
+	timer
+#	git
+#	dotenv
+#	mosh
+#	zsh-autosuggestions
+#	zsh-syntax-highlighting
+#	zsh-z
 )
 
 source $ZSH/oh-my-zsh.sh
