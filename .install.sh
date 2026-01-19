@@ -4,7 +4,7 @@ sudo apt update
 sudo apt full-upgrade -y
 
 # utils
-sudo apt install man info curl wget tar gzip git stow nano tree 
+sudo apt install man info curl wget tar gzip unzip zip git stow nano tree 
 #sudo apt install fzf # what is that? 
 #sudo apt install tee # what is that?
 
@@ -28,8 +28,7 @@ fi
 # TODO sudo apt install binutils clang # change test and dokoncz
 
 # sdkman
-#TODO
-
+curl -s "https://get.sdkman.io" | bash
 
 # ts/js
 #TODO
