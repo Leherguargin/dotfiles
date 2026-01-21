@@ -9,8 +9,8 @@ sudo apt install man info curl wget tar gzip unzip zip git stow nano tree
 #sudo apt install tee # what is that?
 
 # zsh
-#sudo apt install -y zsh # install zsh
-#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # install oh-my-zsh
+sudo apt install -y zsh # install zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # install oh-my-zsh
 
 # tmux
 #TODO sudo apt install -y byobu # for now I dont use byobu
@@ -22,7 +22,7 @@ fi
 #TODO
 
 # neovim
-# TODO
+sudo apt install -y neovim
 
 # c/cpp development tools
 # TODO sudo apt install binutils clang # change test and dokoncz
