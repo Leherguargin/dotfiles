@@ -4,7 +4,7 @@ sudo apt update
 sudo apt full-upgrade -y
 
 # utils
-sudo apt install man info curl wget tar gzip unzip zip git stow nano tree 
+sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree make gcc ripgrep xclip 
 #sudo apt install fzf # what is that? 
 #sudo apt install tee # what is that?
 
@@ -12,7 +12,9 @@ if [[ ! $(which zsh) ]]; then
 	sudo apt install -y zsh # install zsh
 fi
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # install oh-my-zsh
+if [[ ! -d ~/.oh-my-zsh ]]; then
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # install oh-my-zsh
+fi
 
 #TODO sudo apt install -y byobu # for now I dont use byobu
 if [[ ! $(which tmux) ]]; then
@@ -20,7 +22,14 @@ if [[ ! $(which tmux) ]]; then
 fi
 
 if [[ ! $(which nvim) ]]; then
-	sudo apt install -y neovim
+	cd ~
+	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+	sudo rm -rf /opt/nvim-linux-x86_64
+	sudo mkdir -p /opt/nvim-linux-x86_64
+	sudo chmod a+rX /opt/nvim-linux-x86_64
+	sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+	sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin
+	sudo rm -rf nvim-linux-x86_64.tar.gz
 fi
 
 # net-tools
