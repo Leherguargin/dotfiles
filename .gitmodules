@@ -1,6 +1,4 @@
-[submodule ".config/.nvim"]
-	path = .config/.nvim
-	url = git@github.com:Leherguargin/kickstart.nvim.git
 [submodule ".config/nvim"]
 	path = .config/nvim
-	url = git@github.com:Leherguargin/kickstart.nvim.git
+	url = https://github.com/Leherguargin/kickstart.nvim.git
+    pushurl = git@github.com:Leherguargin/kickstart.nvim.git
