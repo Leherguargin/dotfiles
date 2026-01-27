@@ -32,6 +32,10 @@ if [[ ! $(which nvim) ]]; then
 	sudo rm -rf nvim-linux-x86_64.tar.gz
 fi
 
+if [[ ! $(which vim) ]]; then
+	sudo apt install -y vim
+fi
+
 # net-tools
 #TODO
 
