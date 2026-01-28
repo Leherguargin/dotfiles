@@ -4,7 +4,7 @@ sudo apt update
 sudo apt full-upgrade -y
 
 # utils
-sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree make gcc ripgrep xclip 
+sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree make gcc ripgrep xclip gettext-base
 #sudo apt install fzf # what is that? 
 #sudo apt install tee # what is that?
 
