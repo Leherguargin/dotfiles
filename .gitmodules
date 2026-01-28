@@ -2,3 +2,4 @@
 	path = .config/nvim
 	url = https://github.com/Leherguargin/kickstart.nvim.git
     pushurl = git@github.com:Leherguargin/kickstart.nvim.git
+    branch = master
