@@ -54,6 +54,7 @@ fi
 
 if [[ $(which nvim) ]]; then
     alias nvim='nvim'
+    alias kvim='NVIM_APPNAME=nvim-kickstart nvim'
     alias lv='NVIM_APPNAME=nvim-lazyvim nvim'
     alias nc='NVIM_APPNAME=nvim-nvchad nvim'
     alias astro='NVIM_APPNAME=nvim-astro nvim'
