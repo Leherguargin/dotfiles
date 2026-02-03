@@ -52,6 +52,14 @@ if [[ $(which tmux) ]]; then
 	alias t='tmux attach -t 0 || tmux new -s 0'
 fi
 
+if [[ $(which nvim) ]]; then
+    alias nvim='nvim'
+    alias lv='NVIM_APPNAME=nvim-lazyvim nvim'
+    alias nc='NVIM_APPNAME=nvim-nvchad nvim'
+    alias astro='NVIM_APPNAME=nvim-astro nvim'
+fi
+
+#
 #export PATH=~/dev/zig/zig-linux-x86_64-0.15.0-dev.276+9bbac4288:$PATH # zig-lang
 #export PATH=~/dev/go/go1.24.2.linux-amd64/go/bin:$PATH                # go-lang
 #. "$HOME/.cargo/env"                                                  # rust tools
