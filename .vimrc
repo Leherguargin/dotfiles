@@ -22,6 +22,8 @@ set novisualbell
 set t_vb=
 set tm=500
 set foldcolumn=1 " add a bit extra margin on the left
+set number
+set relativenumber
 
 
 " => Colors and Fonts
