@@ -121,4 +121,3 @@ fi
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-echo 'TODO wywal subrepo i forka kickstart a daj go tak jak jest teraz bez submodułu (wywal .git i .gitmodules)'
