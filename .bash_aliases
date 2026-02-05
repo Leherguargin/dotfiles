@@ -1,3 +1,4 @@
+alias l='ls -lFh'
 alias ll='ls -AlFh'
 alias tree='tree -l'
 alias c='clear'
@@ -11,6 +12,8 @@ if [[ ! $(which zsh) ]]; then
 		mkdir $1
 		cd $1
 	}
+    alias md='mkdir -p'
+    alias rd='rmdir'
 fi
 
 # clipboard managmant with klipper, xclip, xsel and wl-copy
