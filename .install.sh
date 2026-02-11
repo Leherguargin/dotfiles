@@ -43,6 +43,12 @@ fi
 # c/cpp development tools
 # TODO sudo apt install binutils clang # change test and dokoncz
 
+# avr utils
+if which avr-gcc >/dev/null 2>&1; then
+    sudo apt install avr-gcc
+    sudo apt install avr-libc binutils-avr
+fi
+
 # sdkman
 if [[ $(which sdk) ]]; then
 	curl -s "https://get.sdkman.io" | bash
