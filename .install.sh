@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail # stop script when error occured, no undeclared variables, propagate errors in pipes
 
 sudo apt update
 sudo apt full-upgrade -y
@@ -8,7 +9,8 @@ sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree mak
 #sudo apt install fzf # what is that? 
 #sudo apt install tee # what is that?
 
-if [[ ! $(which zsh) ]]; then
+
+if ! command -v zsh >/dev/null 2>&1; then
 	sudo apt install -y zsh # install zsh
 fi
 
@@ -16,12 +18,14 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # install oh-my-zsh
 fi
 
+
 #TODO sudo apt install -y byobu # for now I dont use byobu
-if [[ ! $(which tmux) ]]; then
+if ! command -v tmux >/dev/null 2>&1; then
 	sudo apt install -y tmux
 fi
 
-if [[ ! $(which nvim) ]]; then
+
+if ! command -v nvim >/dev/null 2>&1; then
 	cd ~
 	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 	sudo rm -rf /opt/nvim-linux-x86_64
@@ -32,7 +36,8 @@ if [[ ! $(which nvim) ]]; then
 	sudo rm -rf nvim-linux-x86_64.tar.gz
 fi
 
-if [[ ! $(which vim) ]]; then
+
+if ! command -v vim >/dev/null 2>&1; then
 	sudo apt install -y vim
 fi
 
@@ -44,18 +49,28 @@ fi
 # TODO sudo apt install binutils clang # change test and dokoncz
 
 # avr utils
-if which avr-gcc >/dev/null 2>&1; then
-    sudo apt install avr-gcc
-    sudo apt install avr-libc binutils-avr
+if ! command -v avr-gcc >/dev/null 2>&1; then
+    sudo apt install -y gcc-avr
+    sudo apt install -y avr-libc binutils-avr
 fi
 
+
 # sdkman
-if [[ $(which sdk) ]]; then
+set +u
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+if ! command -v sdk >/dev/null 2>&1; then
 	curl -s "https://get.sdkman.io" | bash
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+else
+    sdk selfupdate force
+    sdk update
 fi
+set -u
+
 
 # ts/js
 #TODO
+
 
 # git config if you want (overwritting one from stow dotfiles)
 if [[ -f ~/.gitconfig ]]; then
@@ -63,4 +78,6 @@ if [[ -f ~/.gitconfig ]]; then
 	git config --global user.name "Maciej Leszczynski"
 	git config --global init.defaultBranch main
 fi
+
+sudo apt autoremove -y
 
