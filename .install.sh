@@ -5,7 +5,21 @@ echo -e "\e[35m ---------- update, upgrade, and install utils ---------- \e[0m" 
 sudo apt update
 sudo apt full-upgrade -y
 
+################################################ get system codename ################################################
+source /etc/os-release
+CODENAME="$VERSION_CODENAME"
 
+# Docker/postgres supports only stable releases: bullseye (11) and bookworm (12) 
+# For testing/unstable we fallback to bookworm
+case "$CODENAME" in
+    trixie|sid|testing|unstable) 
+        echo "Detected Debian $CODENAME — using repos for bookworm"
+        CODENAME="bookworm" 
+        ;;
+esac
+
+
+##################################################### install utils ####################################################
 sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree make gcc ripgrep xclip gettext-base ca-certificates
 #sudo apt install fzf # what is that? 
 #sudo apt install tee # what is that?
@@ -123,24 +137,22 @@ if [[ ! -f ~/.gitconfig ]]; then
     git config --global core.editor vim
 fi
 
+############################################ PostgreSQL ################################################
+if command -v psql >/dev/null 2>&1; then
+    echo -e "\e[35m postresql is installed \e[0m"
+else
+    echo -e "\e[35m installing postresql \e[0m"
+    sudo apt install gnupg
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ $CODENAME-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+    sudo apt update
+    sudo apt install postgresql-client # client only
+fi
 
 ############################################ Docker ####################################################
 if command -v docker >/dev/null 2>&1; then
     echo -e "\e[35m docker is installed \e[0m"
 else
     echo -e "\e[35m installing docker \e]0m"
-    source /etc/os-release
-    CODENAME="$VERSION_CODENAME"
-
-    # Docker supports only stable releases: bullseye (11) and bookworm (12) 
-    # For testing/unstable we fallback to bookworm
-    case "$CODENAME" in
-        trixie|sid|testing|unstable) 
-            echo "Detected Debian $CODENAME — using Docker repo for bookworm"
-            CODENAME="bookworm" 
-            ;;
-    esac
-
     sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-doc podman-docker containerd runc | cut -f1) # uninstall all conflicting packages
     
     # set up docker's apt repository
