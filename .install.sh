@@ -8,6 +8,7 @@ sudo apt full-upgrade -y
 ################################################ get system codename ################################################
 source /etc/os-release
 CODENAME="$VERSION_CODENAME"
+echo "$VERSION_CODENAME"
 
 # Docker/postgres supports only stable releases: bullseye (11) and bookworm (12) 
 # For testing/unstable we fallback to bookworm
@@ -17,6 +18,7 @@ case "$CODENAME" in
         CODENAME="bookworm" 
         ;;
 esac
+echo "$CODENAME"
 
 
 ##################################################### install utils ####################################################
@@ -142,10 +144,13 @@ if command -v psql >/dev/null 2>&1; then
     echo -e "\e[35m postresql is installed \e[0m"
 else
     echo -e "\e[35m installing postresql \e[0m"
-    sudo apt install gnupg
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ $CODENAME-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+    sudo rm -f /etc/apt/sources.list.d/pgdg.list # remove old repository
+    sudo rm -f /etc/apt/keyrings/postresql.gpg # remove old key
+    sudo mkdir -p /etc/apt/keyrings # create directory for keys
+    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/keyrings/postgresql.gpg # add new key
+    echo "deb [signed-by=/etc/apt/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt $VERSION_CODENAME-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list # add repo
     sudo apt update
-    sudo apt install postgresql-client # client only
+    sudo apt install -y postgresql-client # client only, for server: postgresql-17 or other version
 fi
 
 ############################################ Docker ####################################################
