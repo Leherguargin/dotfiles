@@ -7,6 +7,8 @@ alias gui='sudo systemctl isolate graphical.target' # for set to boot gui as def
 alias cli='sudo systemctl isolate multi-user.target'
 alias unlock='loginctl unlock-session 1' # for bugged KDE plasma
 
+alias kubectl='minikube kubectl --'
+
 if [[ ! $(which zsh) ]]; then
 	take() {
 		mkdir $1

@@ -178,8 +178,16 @@ else
 fi
 
 #################################################### Kubernetes Minikube Helm ###########################################
-#TODO
+if command -v minikube >/dev/null 2>&1; then
+    echo -e "\e[35m minikube is installed \e[0m"
+else
+    echo -e "\e[35m installing minikube \e[0m"
+    curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+fi
 
+####################################################  autoremove  ###########################################################
 echo -e "\e[35m autoremove \e[0m"
 sudo apt autoremove -y
+
 
