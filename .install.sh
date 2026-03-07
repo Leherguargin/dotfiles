@@ -92,7 +92,7 @@ if command -v avr-gcc >/dev/null 2>&1; then
 	echo -e "\e[35m avr-gcc is installed \e[0m"
 else
     echo -e "\e[35m installing avr-gcc, avr-libc and binutils-avr \e[0m"
-    sudo apt install -y gcc-avr avr-libc binutils-avr
+    sudo apt install -y avrdude gcc-avr avr-libc binutils-avr
 fi
 
 
