@@ -22,7 +22,7 @@ echo "$CODENAME"
 
 
 ##################################################### install utils ####################################################
-sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree make gcc ripgrep xclip gettext-base ca-certificates
+sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree make gcc ripgrep xclip gettext-base ca-certificates 
 #sudo apt install fzf # what is that? 
 #sudo apt install tee # what is that?
 echo -e "\e[35m -------------------------------------------------------- \e[0m"
@@ -92,7 +92,15 @@ if command -v avr-gcc >/dev/null 2>&1; then
 	echo -e "\e[35m avr-gcc is installed \e[0m"
 else
     echo -e "\e[35m installing avr-gcc, avr-libc and binutils-avr \e[0m"
-    sudo apt install -y avrdude gcc-avr avr-libc binutils-avr
+    sudo apt install -y avrdude gcc-avr avr-libc binutils-avr usbutils
+fi
+
+############################################# arm utils ###############################################
+if command -v openocd >/dev/null 2>&1; then
+	echo -e "\e[35m openocd (on chip debugger) is installed \e[0m"
+else
+	echo -e "\e[35m installing openocd \e[0m"
+	sudo apt install -y openocd
 fi
 
 
