@@ -36,8 +36,8 @@ set ffs=unix,dos,mac " use Unix as the standard file type
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
-set expandtab
+" Use spaces instead of tabs (disabled)
+set noexpandtab
 
 " Be smart when using tabs ;)
 set smarttab
