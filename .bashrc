@@ -119,3 +119,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 #THIS MUST BE AT THE END OF THE FILE FOR DENO TO WORK!!!
 . "/home/oromisek/.deno/env"
 source /home/oromisek/.local/share/bash-completion/completions/deno.bash
+
+# ZIG
+export PATH="$HOME/.zig:$PATH"

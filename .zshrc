@@ -132,3 +132,6 @@ export NVM_DIR="$HOME/.nvm"
 # Initialize zsh completions (added by deno install script)
 autoload -Uz compinit
 compinit
+
+# ZIG
+ export PATH="$HOME/.zig:$PATH"

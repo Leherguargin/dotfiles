@@ -103,6 +103,15 @@ else
 	sudo apt install -y openocd
 fi
 
+################################################ zig ##################################################
+if command -v zig >/dev/null 2>&1; then
+	echo -e "\e[35m zig is installed \e[0m"
+else
+	echo -e "\e[35m installing zig \e[0m"
+	cd ~/.zig
+	curl -L https://ziglang.org/builds/zig-x86_64-linux-0.16.0-dev.2905+5d71e3051.tar.xz | tar -xJ
+	mv zig-x86_64-linux-0.16.0-dev.2905+5d71e3051 .
+fi
 
 ################################################# sdkman ##############################################
 set +u
