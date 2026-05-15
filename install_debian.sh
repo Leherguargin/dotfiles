@@ -1,4 +1,3 @@
-#!/bin/bash
 set -euo pipefail # stop script when error occured, no undeclared variables, propagate errors in pipes
 
 echo -e "\e[35m ---------- update, upgrade, and install utils ---------- \e[0m" # print in magenta
@@ -10,20 +9,20 @@ source /etc/os-release
 CODENAME="$VERSION_CODENAME"
 echo "$VERSION_CODENAME"
 
-# Docker/postgres supports only stable releases: bullseye (11) and bookworm (12) 
+# Docker/postgres supports only stable releases: bullseye (11) and bookworm (12)
 # For testing/unstable we fallback to bookworm
 case "$CODENAME" in
-    trixie|sid|testing|unstable) 
+    trixie|sid|testing|unstable)
         echo "Detected Debian $CODENAME — using repos for bookworm"
-        CODENAME="bookworm" 
+        CODENAME="bookworm"
         ;;
 esac
 echo "$CODENAME"
 
 
 ##################################################### install utils ####################################################
-sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree make gcc ripgrep xclip gettext-base ca-certificates 
-#sudo apt install fzf # what is that? 
+sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree make gcc ripgrep xclip gettext-base ca-certificates
+#sudo apt install fzf # what is that?
 #sudo apt install tee # what is that?
 echo -e "\e[35m -------------------------------------------------------- \e[0m"
 
@@ -176,7 +175,7 @@ if command -v docker >/dev/null 2>&1; then
 else
     echo -e "\e[35m installing docker \e]0m"
     sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-doc podman-docker containerd runc | cut -f1) # uninstall all conflicting packages
-    
+
     # set up docker's apt repository
     sudo install -m 0755 -d /etc/apt/keyrings # copy and set variables
     sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc # download keys
@@ -206,5 +205,3 @@ fi
 ####################################################  autoremove  ###########################################################
 echo -e "\e[35m autoremove \e[0m"
 sudo apt autoremove -y
-
-
