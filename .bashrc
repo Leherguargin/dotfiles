@@ -116,9 +116,15 @@ fi
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR PYENV TO WORK!!!
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 #THIS MUST BE AT THE END OF THE FILE FOR DENO TO WORK!!!
-. "/home/oromisek/.deno/env"
-source /home/oromisek/.local/share/bash-completion/completions/deno.bash
+#. "/home/oromisek/.deno/env"
+#source /home/oromisek/.local/share/bash-completion/completions/deno.bash
 
 # ZIG
-export PATH="$HOME/.zig:$PATH"
+#export PATH="$HOME/.zig:$PATH"

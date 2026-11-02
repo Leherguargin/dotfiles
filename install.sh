@@ -4,19 +4,20 @@
 source /etc/os-release
 echo "$ID"
 
+install_dir=./install
 case "$ID" in
     fedora)
         echo "Detected Fedora"
-        chmod +x ./install_fedora.sh
-        ./install_fedora.sh
+        chmod +x "$install_dir/fedora.sh"
+        "$install_dir/fedora.sh"
         ;;
     debian)
         echo "Detected Debian"
-        ./install_debian.sh
+        "$install_dir/debian.sh"
         ;;
     ubuntu)
         echo "Detected Ubuntu"
-        ./install_ubuntu.sh
+        "$install_dir/ubuntu.sh"
         ;;
     *)
         echo "Detected other distro: $ID"
