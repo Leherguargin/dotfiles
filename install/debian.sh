@@ -13,7 +13,7 @@ echo -e "\e[35m -------------------------------------------------------- \e[0m"
 
 
 #################### backup and stow dotfiles ####################
-cd "$(dirname "$0/..")" # go to dir with files
+cd "$(dirname "$0")/.." # go to dir with files
 pwd
 files=".bash_aliases .bashrc .gitconfig .config .tmux.conf .vimrc .zshrc"
 for f in files;; do
