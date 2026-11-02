@@ -1,35 +1,76 @@
 set -euo pipefail # stop script when error occured, no undeclared variables, propagate errors in pipes
 
-echo -e "\e[35m ---------- update, upgrade ---------- \e[0m" # print in magenta
+echo -e "\e[35m -------------------- update, upgrade -------------------- \e[0m" # print in magenta
 sudo apt update
 sudo apt full-upgrade -y
 
 
-#################### install utils ####################
-echo -e "\e[35m ---------- install utils ---------- \e[0m"
+echo -e "\e[35m -------------------- install utils -------------------- \e[0m"
 sudo apt install -y man info curl wget tar gzip unzip zip \
-git stow nano tree ripgrep xclip gettext-base ca-certificates \
-tmux vim
-
-echo -e "\e[35m -------------------------------------------------------- \e[0m"
+git stow nano tree ripgrep xclip gettext-base ca-certificates
 
 
-#################### backup and stow dotfiles ####################
-echo -e "\e[35m ---------- backup and stow dotfiles ---------- \e[0m"
-files=".bash_aliases .bashrc .gitconfig .config .tmux.conf .vimrc .zshrc"
-for f in $files; do
-	target="$HOME/$f"
-	if [[ -f "$target" && ! -L "$target" ]]; then
-		echo "backup of old file: $target -> $target.bak"
-		mv "$target" "$target.bak"
-	fi
-done
-cd "$(dirname "$0")/.." # go to dir with files
-stow -v -t $HOME "$files" # create symbolic links in user home dir
+echo -e "\e[35m -------------------- stow configuration files -------------------- \e[0m"
+backup_file() {
+    local target="$1"
+
+    # target exists and is not a link
+    if [[ -e "$target" && ! -L "$target" ]]; then
+        local backup="${target}.bak"
+
+        # if backup also exists, add current date
+        if [[ -e "$backup" ]]; then
+            local timestamp
+            timestamp=$(date +"%Y%m%d_%H%M%S")
+            backup="${target}.bak.$timestamp"
+        fi
+
+        echo "backup old file: $target -> $backup"
+        mv "$target" "$backup"
+    fi
+}
+
+cd "$(dirname "$0")/.." # change directory to dotfiles
+
+echo -e "\e[35m -------------------- git -------------------- \e[0m"
+backup_file "$HOME/.gitconfig"
+stow -v -t "$HOME" git
+
+echo -e "\e[35m -------------------- tmux -------------------- \e[0m"
+sudo apt install -y tmux
+backup_file "$HOME/.tmux.conf"
+stow -v -t "$HOME" tmux
+
+echo -e "\e[35m -------------------- vim -------------------- \e[0m"
+sudo apt install -y vim
+backup_file "$HOME/.vimrc"
+stow -v -t "$HOME" vim
+
+echo -e "\e[35m -------------------- bash -------------------- \e[0m"
+backup_file "$HOME/.bash_aliases"
+backup_file "$HOME/.bashrc"
+stow -v -t "$HOME" bash
+
+echo -e "\e[35m -------------------- zsh -------------------- \e[0m"
+backup_file "$HOME/.zshrc"
+stow -v -t "$HOME" zsh
 
 
-########## zsh  oh-my-zsh ##########
-echo -e "\e[35m ---------- install zsh ---------- \e[0m"
+
+# echo -e "\e[35m -------------------- backup and stow dotfiles -------------------- \e[0m"
+# files=".bash_aliases .bashrc .gitconfig .config .tmux.conf .vimrc .zshrc"
+# for f in $files; do
+# 	target="$HOME/$f"
+# 	if [[ -f "$target" && ! -L "$target" ]]; then
+# 		echo "backup of old file: $target -> $target.bak"
+# 		mv "$target" "$target.bak"
+# 	fi
+# done
+# cd "$(dirname "$0")/.." # go to dir with files
+# stow -v -t $HOME "$files" # create symbolic links in user home dir
+
+
+echo -e "\e[35m -------------------- install zsh -------------------- \e[0m"
 if command -v zsh >/dev/null 2>&1; then
 	echo -e "\e[35m zsh is installed \e[0m"
 else
@@ -37,7 +78,7 @@ else
     sudo apt install -y zsh # install zsh
 fi
 
-echo -e "\e[35m ---------- install oh-my-zsh ---------- \e[0m"
+echo -e "\e[35m -------------------- install oh-my-zsh -------------------- \e[0m"
 if [[ -d ~/.oh-my-zsh ]]; then
     echo -e "\e[35m .oh-my-zsh exists \e[0m"
 else
@@ -46,8 +87,7 @@ else
 fi
 
 
-#################### nvim ####################
-# echo -e "\e[35m ---------- install nvim ---------- \e[0m"
+# echo -e "\e[35m -------------------- install nvim -------------------- \e[0m"
 # if command -v nvim >/dev/null 2>&1; then
 # 	echo -e "\e[35m nvim is installed \e[0m"
 # else
@@ -61,8 +101,7 @@ fi
 # fi
 
 
-################################################# sdkman ##############################################
-# echo -e "\e[35m ---------- install sdkman ---------- \e[0m"
+# echo -e "\e[35m -------------------- install sdkman -------------------- \e[0m"
 # set +u
 # [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 # if command -v sdk >/dev/null 2>&1; then
@@ -77,8 +116,7 @@ fi
 # set -u
 
 
-############################################# python manager and python #################################
-# echo -e "\e[35m ---------- install pyenv ---------- \e[0m"
+# echo -e "\e[35m -------------------- install pyenv -------------------- \e[0m"
 # python_version=3.14
 
 # if command -v pyenv >/dev/null 2>&1; then
@@ -96,6 +134,5 @@ fi
 # fi
 	
 
-####################################################  autoremove  ###########################################################
-echo -e "\e[35m ---------- autoremove ---------- \e[0m"
+echo -e "\e[35m -------------------- autoremove -------------------- \e[0m"
 sudo apt autoremove -y
