@@ -7,14 +7,14 @@ sudo apt full-upgrade -y
 
 #################### install utils ####################
 sudo apt install -y man info curl wget tar gzip unzip zip \
-git stow nano tree ripgrep xclip gettext-base ca-certificates
+git stow nano tree ripgrep xclip gettext-base ca-certificates \
+tmux vim
 
 echo -e "\e[35m -------------------------------------------------------- \e[0m"
 
 
 #################### backup and stow dotfiles ####################
 cd "$(dirname "$0")/.." # go to dir with files
-pwd
 files=".bash_aliases .bashrc .gitconfig .config .tmux.conf .vimrc .zshrc"
 for f in files;; do
 	if [[ -f "$f" ]]; then
@@ -41,15 +41,6 @@ else
 fi
 
 
-#################### tmux ####################
-if command -v tmux >/dev/null 2>&1; then
-    echo -e "\e[35m tmux is installed \e[0m"
-else
-    echo -e "\e[35m installing tmux \e[0m"
-	sudo apt install -y tmux
-fi
-
-
 #################### nvim ####################
 # if command -v nvim >/dev/null 2>&1; then
 # 	echo -e "\e[35m nvim is installed \e[0m"
@@ -64,46 +55,37 @@ fi
 # fi
 
 
-#################### vim ####################
-if command -v vim >/dev/null 2>&1; then
-	echo -e "\e[35m vim is installed \e[0m"
-else
-    echo -e "\e[35m installing vim \e[0m"
-	sudo apt install -y vim
-fi
-
-
 ################################################# sdkman ##############################################
-set +u
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-if command -v sdk >/dev/null 2>&1; then
-	echo -e "\e[35m updating sdkman \e[0m"
-    sdk selfupdate force
-    sdk update
-else
-	echo -e "\e[35m installing sdkman \e[0m"
-	curl -s "https://get.sdkman.io" | bash
-    source "$HOME/.sdkman/bin/sdkman-init.sh"
-fi
-set -u
+# set +u
+# [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+# if command -v sdk >/dev/null 2>&1; then
+# 	echo -e "\e[35m updating sdkman \e[0m"
+#     sdk selfupdate force
+#     sdk update
+# else
+# 	echo -e "\e[35m installing sdkman \e[0m"
+# 	curl -s "https://get.sdkman.io" | bash
+#     source "$HOME/.sdkman/bin/sdkman-init.sh"
+# fi
+# set -u
 
 
 ############################################# python manager and python #################################
-python_version=3.14
+# python_version=3.14
 
-if command -v pyenv >/dev/null 2>&1; then
-	echo -e "\e[35m updating python manager and python version \e[0m"
-	pyenv update
-else
-	echo -e "\e[35 installing pyenv, tools and python $python_version \e[0m"
-	sudo apt install -y make build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev  \
-libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
-libffi-dev liblzma-dev # install tools needed for compiling python from sources (no wheels(compiled versions) for raspberry)
-	curl https://pyenv.run | bash
-	# pyenv install $python_version
-	# pyenv global $python_version
-fi
+# if command -v pyenv >/dev/null 2>&1; then
+# 	echo -e "\e[35m updating python manager and python version \e[0m"
+# 	pyenv update
+# else
+# 	echo -e "\e[35 installing pyenv, tools and python $python_version \e[0m"
+# 	sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+# libbz2-dev libreadline-dev libsqlite3-dev  \
+# libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
+# libffi-dev liblzma-dev # install tools needed for compiling python from sources (no wheels(compiled versions) for raspberry)
+# 	curl https://pyenv.run | bash
+# 	# pyenv install $python_version
+# 	# pyenv global $python_version
+# fi
 	
 
 ####################################################  autoremove  ###########################################################
