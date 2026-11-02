@@ -16,12 +16,13 @@ echo -e "\e[35m -------------------------------------------------------- \e[0m"
 #################### backup and stow dotfiles ####################
 cd "$(dirname "$0")/.." # go to dir with files
 files=".bash_aliases .bashrc .gitconfig .config .tmux.conf .vimrc .zshrc"
-for f in files;; do
-	if [[ -f "$f" ]]; then
-		mv "$f" "$f.bak"
+for f in $files; do
+	target="$HOME/$f"
+	if [[ -f "$target" && ! -L "$target" ]]; then
+		mv "$target" "$target.bak"
 	fi
 done
-#stow -v -t ~ "$files" # create symbolic links in user home dir
+#stow -v -t $HOME "$files" # create symbolic links in user home dir
 
 
 ########## zsh  oh-my-zsh ##########

@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Load OS info
-source /etc/os-release
-echo "$ID"
+source /etc/os-release # this will source variable $ID with OS name
 
 install_dir=./install
 case "$ID" in
