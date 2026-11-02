@@ -1,11 +1,12 @@
 set -euo pipefail # stop script when error occured, no undeclared variables, propagate errors in pipes
 
-echo -e "\e[35m ---------- update, upgrade, and install utils ---------- \e[0m" # print in magenta
+echo -e "\e[35m ---------- update, upgrade ---------- \e[0m" # print in magenta
 sudo apt update
 sudo apt full-upgrade -y
 
 
 #################### install utils ####################
+echo -e "\e[35m ---------- install utils ---------- \e[0m"
 sudo apt install -y man info curl wget tar gzip unzip zip \
 git stow nano tree ripgrep xclip gettext-base ca-certificates \
 tmux vim
@@ -14,18 +15,21 @@ echo -e "\e[35m -------------------------------------------------------- \e[0m"
 
 
 #################### backup and stow dotfiles ####################
-cd "$(dirname "$0")/.." # go to dir with files
+echo -e "\e[35m ---------- backup and stow dotfiles ---------- \e[0m"
 files=".bash_aliases .bashrc .gitconfig .config .tmux.conf .vimrc .zshrc"
 for f in $files; do
 	target="$HOME/$f"
 	if [[ -f "$target" && ! -L "$target" ]]; then
+		echo "backup of old file: $target -> $target.bak"
 		mv "$target" "$target.bak"
 	fi
 done
-#stow -v -t $HOME "$files" # create symbolic links in user home dir
+cd "$(dirname "$0")/.." # go to dir with files
+stow -v -t $HOME "$files" # create symbolic links in user home dir
 
 
 ########## zsh  oh-my-zsh ##########
+echo -e "\e[35m ---------- install zsh ---------- \e[0m"
 if command -v zsh >/dev/null 2>&1; then
 	echo -e "\e[35m zsh is installed \e[0m"
 else
@@ -33,7 +37,7 @@ else
     sudo apt install -y zsh # install zsh
 fi
 
-
+echo -e "\e[35m ---------- install oh-my-zsh ---------- \e[0m"
 if [[ -d ~/.oh-my-zsh ]]; then
     echo -e "\e[35m .oh-my-zsh exists \e[0m"
 else
@@ -43,6 +47,7 @@ fi
 
 
 #################### nvim ####################
+# echo -e "\e[35m ---------- install nvim ---------- \e[0m"
 # if command -v nvim >/dev/null 2>&1; then
 # 	echo -e "\e[35m nvim is installed \e[0m"
 # else
@@ -57,6 +62,7 @@ fi
 
 
 ################################################# sdkman ##############################################
+# echo -e "\e[35m ---------- install sdkman ---------- \e[0m"
 # set +u
 # [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 # if command -v sdk >/dev/null 2>&1; then
@@ -72,6 +78,7 @@ fi
 
 
 ############################################# python manager and python #################################
+# echo -e "\e[35m ---------- install pyenv ---------- \e[0m"
 # python_version=3.14
 
 # if command -v pyenv >/dev/null 2>&1; then
@@ -90,5 +97,5 @@ fi
 	
 
 ####################################################  autoremove  ###########################################################
-echo -e "\e[35m autoremove \e[0m"
+echo -e "\e[35m ---------- autoremove ---------- \e[0m"
 sudo apt autoremove -y
