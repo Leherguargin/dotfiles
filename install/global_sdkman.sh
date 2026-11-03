@@ -1,13 +1,12 @@
 #!/bin/bash
 set -euo pipefail
-set -e
 
 if [ "$EUID" -ne 0 ]; then
     echo "run this script with sudo: sudo ./global_sdkman.sh!"
     exit 1
 fi
 
-echo -e "\e[35m -------------------- global sdkman -------------------- \e[0m"
+printf "\033[35m -------------------- global sdkman -------------------- \033[0m"
 
 export SDKMAN_DIR="/opt/sdkman"
 apt install unzip zip tar find curl sed
@@ -32,4 +31,4 @@ find /opt/sdkman -type d -exec chmod g+s {} +
 echo "add users to sdkman-group for access to python by:"
 echo "sudo usermod -aG sdkman-group <username>"
 
-echo -e "\e[32m Done, SDKMAN installed globally in /opt/sdkman. \e[0m"
+printf "\033[35m Done, SDKMAN installed globally in /opt/sdkman. \033[0m"

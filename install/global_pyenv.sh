@@ -1,4 +1,6 @@
-echo -e "\e[35m -------------------- global pyenv -------------------- \e[0m"
+set -euo pipefail
+
+printf "\033[35m -------------------- global pyenv -------------------- \033[0m"
 sudo apt update
 sudo apt install -y make build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
@@ -23,4 +25,4 @@ sudo find /opt/pyenv -type d -exec chmod g+s {} +
 echo "add users to pyenv-group for access to python by:"
 echo "sudo usermod -aG pyenv-group <username>"
 
-echo -e "\e[32m Done, pyenv installed globally in /opt/pyenv. \e[0m"
+printf "\033[35m Done, pyenv installed globally in /opt/pyenv. \033[0m"
