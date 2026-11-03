@@ -11,7 +11,7 @@ echo -e "\e[35m -------------------- global sdkman -------------------- \e[0m"
 
 export SDKMAN_DIR="/opt/sdkman"
 curl -s "https://get.sdkman.io" | bash
-chmod -R 755 "$SDKMAN_DIR"
+chmod -R 775 "$SDKMAN_DIR"
 
 cat << 'EOF' > /etc/profile.d/sdkman.sh
 export SDKMAN_DIR="/opt/sdkman"
@@ -21,5 +21,13 @@ fi
 EOF
 
 chmod +x /etc/profile.d/sdkman.sh
+
+groupadd sdkman-group
+chown -R root:sdkman-group /opt/sdkman
+chmod -R 775 /opt/sdkman
+find /opt/sdkman -type d -exec chmod g+s {} +
+
+echo "add users to sdkman-group for access to python by:"
+echo "sudo usermod -aG sdkman-group <username>"
 
 echo -e "\e[32m Done, SDKMAN installed globally in /opt/sdkman. \e[0m"
