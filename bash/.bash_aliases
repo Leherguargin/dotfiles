@@ -53,17 +53,22 @@ readln() {
     grep "$1" | head -n 1
 }
 
-if [[ $(which tmux) ]]; then
+# MUST BE HERE FOR GLOBAL SDKMAN TO WORK
+if [[ -f /etc/profile.d/sdkman.sh ]]; then
+	source /etc/profile.d/sdkman.sh
+fi
+
+if [[ $(which tmux) ]]; then #TODO zmien to na command -v czy cos
 	alias t='tmux attach -t 0 || tmux new -s 0'
 fi
 
-if [[ $(which nvim) ]]; then
-    alias nvim='nvim'
-    alias kvim='NVIM_APPNAME=nvim-kickstart nvim'
-    alias lv='NVIM_APPNAME=nvim-lazyvim nvim'
-    alias nc='NVIM_APPNAME=nvim-nvchad nvim'
-    alias astro='NVIM_APPNAME=nvim-astro nvim'
-fi
+#if [[ $(which nvim) ]]; then
+#    alias nvim='nvim'
+#    alias kvim='NVIM_APPNAME=nvim-kickstart nvim'
+#    alias lv='NVIM_APPNAME=nvim-lazyvim nvim'
+#    alias nc='NVIM_APPNAME=nvim-nvchad nvim'
+#    alias astro='NVIM_APPNAME=nvim-astro nvim'
+#fi
 
 #
 #export PATH=~/dev/zig/zig-linux-x86_64-0.15.0-dev.276+9bbac4288:$PATH # zig-lang
