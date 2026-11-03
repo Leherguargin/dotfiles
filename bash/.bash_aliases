@@ -58,6 +58,11 @@ if [[ -f /etc/profile.d/sdkman.sh ]]; then
 	source /etc/profile.d/sdkman.sh
 fi
 
+# MUST BE HERE FOR GLOBAL PYENV TO WORK
+if [[ -f /etc/profile.d/pyenv.sh ]]; then
+	source /etc/profile.d/pyenv.sh
+fi
+
 if [[ $(which tmux) ]]; then #TODO zmien to na command -v czy cos
 	alias t='tmux attach -t 0 || tmux new -s 0'
 fi
