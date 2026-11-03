@@ -15,6 +15,7 @@ chmod -R 775 "$SDKMAN_DIR"
 
 cat << 'EOF' > /etc/profile.d/sdkman.sh
 export SDKMAN_DIR="/opt/sdkman"
+umask 002
 if [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]]; then
     source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 fi
