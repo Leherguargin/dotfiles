@@ -10,6 +10,7 @@ fi
 echo -e "\e[35m -------------------- global sdkman -------------------- \e[0m"
 
 export SDKMAN_DIR="/opt/sdkman"
+apt install unzip zip tar find curl sed
 curl -s "https://get.sdkman.io" | bash
 chmod -R 775 "$SDKMAN_DIR"
 

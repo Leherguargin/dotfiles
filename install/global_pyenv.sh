@@ -9,6 +9,7 @@ sudo git clone https://github.com/pyenv/pyenv.git /opt/pyenv
 sudo tee /etc/profile.d/pyenv.sh << 'EOF'
 export PYENV_ROOT="/opt/pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
+umask 002
 eval "$(pyenv init -)"
 EOF
 
