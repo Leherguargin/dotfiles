@@ -10,14 +10,14 @@ fi
 printf "\033[35m -------------------- global pyenv -------------------- \033[0m\n"
 if command -v apt >/dev/null 2>&1; then
     apt update
-    apt install -y make build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev git
+    apt install -y build-essential libssl-dev zlib1g-dev \
+    libbz2-dev libreadline-dev libsqlite3-dev wget curl git \
+    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 elif command -v dnf >/dev/null 2>&1; then
     dnf update
-    dnf install -y make build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev git
+    dnf install -y gcc make patch zlib-devel bzip2 bzip2-devel readline-devel sqlite \
+    sqlite-devel openssl-devel tk-devel libffi-devel xz-devel libuuid-devel gdbm-devel \
+    ncurses-devel git curl wget
 else
     echo "cannot find any known package manager!"
     exit 1
