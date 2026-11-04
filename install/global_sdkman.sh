@@ -10,8 +10,16 @@ fi
 printf "\033[35m -------------------- global sdkman -------------------- \033[0m\n"
 
 export SDKMAN_DIR="/opt/sdkman"
-apt update
-apt install unzip zip tar find curl sed
+if command -v apt >/dev/null 2>&1; then
+    apt update
+    apt install unzip zip tar findutils curl sed bash
+else if command -v dnf >/dev/null 2>&1; then
+    dnf update
+    dnf install unzip zip tar findutils curl sed bash
+else
+    echo "cannot find any known package manager!"
+    exit 1
+fi
 curl -s "https://get.sdkman.io" | bash
 chmod -R 775 "$SDKMAN_DIR"
 
@@ -30,7 +38,7 @@ chown -R root:sdkman-group /opt/sdkman
 chmod -R 775 /opt/sdkman
 find /opt/sdkman -type d -exec chmod g+s {} +
 
-echo "add users to sdkman-group for access to python by:"
+echo "add users to sdkman-group for access to sdkman by:"
 echo "\`sudo usermod -aG sdkman-group <username>\`"
 
 printf "\033[35m Done, SDKMAN installed globally in /opt/sdkman. \033[0m\n

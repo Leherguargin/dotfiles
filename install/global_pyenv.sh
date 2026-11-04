@@ -2,17 +2,26 @@
 
 set -euo pipefail
 
-if [ "$EUID" -ne 0 ]; then
+if [[ "$EUID" -ne 0 ]]; then
     echo "run this script with sudo: \`sudo ./global_pyenv.sh\`!"
     exit 1
 fi
 
 printf "\033[35m -------------------- global pyenv -------------------- \033[0m\n"
-
-apt update
-apt install -y make build-essential libssl-dev zlib1g-dev \
+if command -v apt >/dev/null 2>&1; then
+    apt update
+    apt install -y make build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev git
+else if command -v dnf >/dev/null 2>&1; then
+    dnf update
+    dnf install -y make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev git
+else
+    echo "cannot find any known package manager!"
+    exit 1
+fi
 
 git clone https://github.com/pyenv/pyenv.git /opt/pyenv
 
