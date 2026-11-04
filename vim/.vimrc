@@ -27,6 +27,7 @@ set relativenumber
 set title " sets tmux tab title or terminal title to edited file name
 set laststatus=2 " always show status bar on the bottom
 set statusline=%F\ %m%r%h%w\ [Line:%l/%L,Col:%c]
+set nocompatible
 
 " => Colors and Fonts
 syntax enable " enable syntax highlighting
