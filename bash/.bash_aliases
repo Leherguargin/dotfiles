@@ -8,6 +8,15 @@ alias cli='sudo systemctl isolate multi-user.target'
 alias unlock='loginctl unlock-session 1' # for bugged KDE plasma
 alias rd='rmdir'
 alias md='mkdir -p'
+alias g='git'
+alias ...='../..'
+alias ....='../../..'
+alias .....='../../../..'
+alias ......='../../../../..'
+
+if command -v ripgrep >/dev/null 2>&1; then
+    alias grep='ripgrep'
+fi
 
 #alias kubectl='minikube kubectl --'
 

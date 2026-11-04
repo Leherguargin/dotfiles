@@ -3,11 +3,11 @@
 set -euo pipefail
 
 if [ "$EUID" -ne 0 ]; then
-    echo "run this script with sudo: sudo ./global_sdkman.sh!"
+    echo "run this script with sudo: \`sudo ./global_sdkman.sh\`!"
     exit 1
 fi
 
-printf "\033[35m -------------------- global pyenv -------------------- \033[0m"
+printf "\033[35m -------------------- global pyenv -------------------- \033[0m\n"
 
 apt update
 apt install -y make build-essential libssl-dev zlib1g-dev \
@@ -31,6 +31,6 @@ chown -R root:pyenv-group /opt/pyenv
 find /opt/pyenv -type d -exec chmod g+s {} +
 
 echo "add users to pyenv-group for access to python by:"
-echo "sudo usermod -aG pyenv-group <username>"
+echo "\`sudo usermod -aG pyenv-group <username>\`"
 
-printf "\033[35m Done, pyenv installed globally in /opt/pyenv. \033[0m"
+printf "\033[35m Done, pyenv installed globally in /opt/pyenv. \033[0m\n"
