@@ -13,7 +13,7 @@ export SDKMAN_DIR="/opt/sdkman"
 if command -v apt >/dev/null 2>&1; then
     apt update
     apt install unzip zip tar findutils curl sed bash
-else if command -v dnf >/dev/null 2>&1; then
+elif command -v dnf >/dev/null 2>&1; then
     dnf update
     dnf install unzip zip tar findutils curl sed bash
 else
