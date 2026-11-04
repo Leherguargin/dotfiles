@@ -41,4 +41,4 @@ find /opt/sdkman -type d -exec chmod g+s {} +
 echo "add users to sdkman-group for access to sdkman by:"
 echo "\`sudo usermod -aG sdkman-group <username>\`"
 
-printf "\033[35m Done, SDKMAN installed globally in /opt/sdkman. \033[0m\n
+printf "\033[35m Done, SDKMAN installed globally in /opt/sdkman. \033[0m\n"
