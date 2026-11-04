@@ -6,17 +6,19 @@ alias update='sudo apt update && sudo apt full-upgrade -y'
 alias gui='sudo systemctl isolate graphical.target' # for set to boot gui as default: 'sudo systemctl set-default graphical.target'
 alias cli='sudo systemctl isolate multi-user.target'
 alias unlock='loginctl unlock-session 1' # for bugged KDE plasma
+alias rd='rmdir'
+alias md='mkdir -p'
 
-alias kubectl='minikube kubectl --'
+#alias kubectl='minikube kubectl --'
 
-if [[ ! $(which zsh) ]]; then
-	take() {
-		mkdir $1
-		cd $1
-	}
-    alias md='mkdir -p'
-    alias rd='rmdir'
+take() {
+	mkdir -p "$1" && cd "$1"
+}
+
+if command -v tmux >/dev/null 2>&1; then
+    alias t='tmux attach -t 0 || tmux new -s 0'
 fi
+
 
 # clipboard managmant with klipper, xclip, xsel and wl-copy
 clip() {
@@ -56,6 +58,11 @@ readln() {
 # MUST BE HERE FOR GLOBAL SDKMAN TO WORK
 if [[ -f /etc/profile.d/sdkman.sh ]]; then
 	source /etc/profile.d/sdkman.sh
+else
+    if [[ -e "$HOME/.sdkman" ]]; then
+        export SDKMAN_DIR="$HOME/.sdkman"
+        [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+    fi
 fi
 
 # MUST BE HERE FOR GLOBAL PYENV TO WORK
@@ -63,26 +70,19 @@ if [[ -f /etc/profile.d/pyenv.sh ]]; then
 	source /etc/profile.d/pyenv.sh
 fi
 
-if [[ $(which tmux) ]]; then #TODO zmien to na command -v czy cos
-	alias t='tmux attach -t 0 || tmux new -s 0'
+# MUST BE HERE FOR GLOBAL NVIM TO WORD
+if command -v nvim >/dev/null 2>&1; then
+    alias nvim='nvim'
+
+    if [[ -e ~/.config/nvim-astronvim ]]; then
+        alias astro='NVIM_APPNAME=nvim-astro nvim'
+    fi
+
+    if [[ -e ~/.config/nvim-lazyvim ]]; then
+        alias lv='NVIM_APPNAME=nvim-lazyvim nvim'
+    fi
+
+    if [[ -e ~/.config/nvim-nvchad ]]; then
+        alias nc='NVIM_APPNAME=nvim-nvchad nvim'
+    fi    
 fi
-
-#if [[ $(which nvim) ]]; then
-#    alias nvim='nvim'
-#    alias kvim='NVIM_APPNAME=nvim-kickstart nvim'
-#    alias lv='NVIM_APPNAME=nvim-lazyvim nvim'
-#    alias nc='NVIM_APPNAME=nvim-nvchad nvim'
-#    alias astro='NVIM_APPNAME=nvim-astro nvim'
-#fi
-
-#
-#export PATH=~/dev/zig/zig-linux-x86_64-0.15.0-dev.276+9bbac4288:$PATH # zig-lang
-#export PATH=~/dev/go/go1.24.2.linux-amd64/go/bin:$PATH                # go-lang
-#. "$HOME/.cargo/env"                                                  # rust tools
-#[ -f "/home/oromisek/.ghcup/env" ] && . "/home/oromisek/.ghcup/env"   # ghcup-env (gnu haskel)
-
-#export PATH=~/dev/languages/ocaml:$PATH                               # ocaml
-#eval $(opam env)                                                      # ocaml package manager and tools
-
-# nvm sdkman juliaup should add when installing (check) fix scripts to each check if language is installed and then initialize them (like hgcup does)
-

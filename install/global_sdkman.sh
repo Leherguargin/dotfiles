@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -euo pipefail
 
 if [ "$EUID" -ne 0 ]; then
@@ -9,6 +10,7 @@ fi
 printf "\033[35m -------------------- global sdkman -------------------- \033[0m"
 
 export SDKMAN_DIR="/opt/sdkman"
+apt update
 apt install unzip zip tar find curl sed
 curl -s "https://get.sdkman.io" | bash
 chmod -R 775 "$SDKMAN_DIR"
