@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if [ "$EUID" -ne 0 ]; then
-    echo "run this script with sudo: \`sudo ./global_sdkman.sh\`!"
+    echo "run this script with sudo: \`sudo ./global_pyenv.sh\`!"
     exit 1
 fi
 
