@@ -2,6 +2,11 @@
 
 set -euo pipefail
 
+if ! command -v sdk >/dev/null 2>&1; then
+    echo "sdk already installed"
+    exit 0
+fi
+
 if [ "$EUID" -ne 0 ]; then
     echo "run this script with sudo: \`sudo ./global_sdkman.sh\`!"
     exit 1

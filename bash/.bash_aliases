@@ -14,20 +14,17 @@ alias ....='../../..'
 alias .....='../../../..'
 alias ......='../../../../..'
 
-if command -v ripgrep >/dev/null 2>&1; then
-    alias grep='ripgrep'
-fi
-
-#alias kubectl='minikube kubectl --'
-
 take() {
 	mkdir -p "$1" && cd "$1"
 }
 
+if command -v minikube >/dev/null 2>&1; then
+    alias kubectl='minikube kubectl --'
+fi
+
 if command -v tmux >/dev/null 2>&1; then
     alias t='tmux attach -t 0 || tmux new -s 0'
 fi
-
 
 # clipboard managmant with klipper, xclip, xsel and wl-copy
 clip() {
@@ -76,7 +73,26 @@ fi
 
 # MUST BE HERE FOR GLOBAL PYENV TO WORK
 if [[ -f /etc/profile.d/pyenv.sh ]]; then
-	source /etc/profile.d/pyenv.sh
+    source /etc/profile.d/pyenv.sh
+    pyenv() {
+        if [[ "$1" == "install" ]]; then
+            local free_tmp_mb
+            free_tmp_mb=$(df -Pm /tmp 2>/dev/null | awk 'NR==2 {print $4}')
+            local limit=3000
+
+            if [[ -z "$free_tmp_mb" || "$free_tmp_mb" -lt "$limit" ]]; then
+                local new_temp="${XDG_CACHE_HOME:-$HOME/.cache}/pyenv-tmp"
+                echo "[pyenv-wrapper] Free space in /tmp is ${free_tmp_mb:-0} MB (limit: ${limit} MB). Redirecting to $new_temp"
+                mkdir -p "$new_temp"
+                TMPDIR="$new_temp" command pyenv "$@"
+                local return_code=$?
+                rmdir "$new_temp" 2>/dev/null
+                return "$return_code"
+            fi
+        fi
+
+        command pyenv "$@"
+    }
 fi
 
 # MUST BE HERE FOR GLOBAL NVIM TO WORD
