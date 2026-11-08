@@ -9,10 +9,7 @@ alias unlock='loginctl unlock-session 1' # for bugged KDE plasma
 alias rd='rmdir'
 alias md='mkdir -p'
 alias g='git'
-alias ...='../..'
-alias ....='../../..'
-alias .....='../../../..'
-alias ......='../../../../..'
+alias py='python'
 
 take() {
 	mkdir -p "$1" && cd "$1"
@@ -109,5 +106,5 @@ if command -v nvim >/dev/null 2>&1; then
 
     if [[ -e ~/.config/nvim-nvchad ]]; then
         alias nc='NVIM_APPNAME=nvim-nvchad nvim'
-    fi    
+    fi
 fi
