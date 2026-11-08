@@ -11,6 +11,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="darkblood"
+# ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -82,6 +83,7 @@ plugins=(
 #	zsh-autosuggestions
 #	zsh-syntax-highlighting
 #	zsh-z
+  virtualenv
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -114,6 +116,21 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# PYTHON VENV AUTOMATIC ACTIVATION
+auto_activate_venv() {
+  if [[ -d .venv && "$VIRTUAL_ENV" != "$PWD/.venv" ]]; then
+    source .venv/bin/activate
+    echo "venv automatically activated"
+  elif [[ -n "$VIRTUAL_ENV" && "$PWD" != ${VIRTUAL_ENV%/.venv}* ]]; then
+    deactivate
+  fi
+}
+
+chpwd_functions+=(auto_activate_venv) # function to run when directory change
+
+# add bash_aliases if file exists
 if [[ -f ~/.bash_aliases ]]; then
 	source ~/.bash_aliases
 fi
+
