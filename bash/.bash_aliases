@@ -58,15 +58,6 @@ readln() {
     grep "$1" | head -n 1
 }
 
-export VIRTUAL_ENV_DISABLE_PROMPT="1" # for python venv to do not modify prompt
-
-prompt_python_env() {
-    if [[ -n "$VIRTUAL_ENV" ]]; then
-        local venv_name=$(basename "$VIRTUAL_ENV")
-        local py_version=$("$VIRTUAL_ENV/bin/python" --version 2>/dev/null | awk '{print $2}')
-        echo "%F{cyan}(${venv_name} ${py_version})%f "
-    fi
-}
 
 # MUST BE HERE FOR GLOBAL SDKMAN TO WORK
 if [[ -f /etc/profile.d/sdkman.sh ]]; then

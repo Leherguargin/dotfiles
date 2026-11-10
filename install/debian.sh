@@ -68,10 +68,14 @@ fi
 
 printf "\033[35m -------------------- install oh-my-zsh -------------------- \033[0m\n"
 if [[ -d ~/.oh-my-zsh ]]; then
-    echo ".oh-my-zsh exists"
+    echo ".oh-my-zsh exists, stow'ing custom plugins nad themes"
+    backup_file "$HOME/.oh-my-zsh/custom/themes/darkblood-venv.zsh-theme"
+    stow -v -t "$HOME/.oh-my-zsh/custom/themes" oh-my-zsh
 else
     echo "installing oh-my-zsh"
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    backup_file "$HOME/.oh-my-zsh/custom/themes/darkblood-venv.zsh-theme"
+    stow -v -t "$HOME/.oh-my-zsh/custom/themes" oh-my-zsh
 fi
 
 
