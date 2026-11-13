@@ -30,6 +30,11 @@ set statusline=%F\ %m%r%h%w\ [Line:%l/%L,Col:%c]
 set nocompatible
 
 " => Colors and Fonts
+set termguicolors " enable TrueColor in terminal
+colorscheme elflord " dark theme (do override highlight colors)
+" highlight Normal cterm=None ctermbg=236 guibg=#1d1d4d " color of terminal
+set cursorline " line with cursor will be underlined
+highlight cursorline cterm=None ctermbg=236 guibg=#2d2d4d " colors of cursor line
 syntax enable " enable syntax highlighting
 set regexpengine=0 " set regular expresson engine automatically
 set background=dark

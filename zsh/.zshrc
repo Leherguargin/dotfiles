@@ -1,5 +1,6 @@
 # Add deno completions to search path
-if [[ ":$FPATH:" != *":/home/oromisek/.zsh/completions:"* ]]; then export FPATH="/home/oromisek/.zsh/completions:$FPATH"; fi
+# if [[ ":$FPATH:" != *":/home/oromisek/.zsh/completions:"* ]]; then export FPATH="/home/oromisek/.zsh/completions:$FPATH"; fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -65,35 +66,27 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
+# doc here: https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins-Overview
 plugins=(
-#	docker
-#	extract
-#	timer
-  git
-#	dotenv
-#	mosh
-#	zsh-autosuggestions
-#	zsh-syntax-highlighting
-#	zsh-z
-  virtualenv
+  git # aliases for version control system git
+  fzf # alisase for fuzzy find tool fzf
+  fzf-tab # all tab completitions done by fzf
+  copyfile # integrate with omz built-in clipcopy for files
+  aliases # 'als' will display grouped aliases, with <keyword> will filter aliases
+
+  # python plugins
+  python # a few aliases for python and venv
+
+  # zsh plugins
+  zsh-interactive-cd # uses fzf instead of classic completitions while cd <tab>
+	zsh-autosuggestions # enable gray suggestions based on history while typing commands
+	zsh-syntax-highlighting # Fish-like syntax highlighting for commands as they are typed at a zsh prompt
 )
 
+PYTHON_AUTO_VRUN=true # needs to be before omz sourcing for python plugin to activate venvs automatically
+
 source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -102,37 +95,4 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='nvim'
 # fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
-
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
 export VIRTUAL_ENV_DISABLE_PROMPT="1" # for python venv to do not modify prompt
-
-# PYTHON VENV AUTOMATIC ACTIVATION
-auto_activate_venv() {
-  if [[ -d .venv && "$VIRTUAL_ENV" != "$PWD/.venv" ]]; then
-    source .venv/bin/activate
-    echo "venv automatically activated"
-  elif [[ -n "$VIRTUAL_ENV" && "$PWD" != ${VIRTUAL_ENV%/.venv}* ]]; then
-    deactivate
-  fi
-}
-
-chpwd_functions+=(auto_activate_venv) # function to run when directory change
-
-# add bash_aliases if file exists
-if [[ -f ~/.bash_aliases ]]; then
-	source ~/.bash_aliases
-fi
-

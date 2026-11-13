@@ -8,7 +8,8 @@ sudo apt full-upgrade -y
 
 
 printf "\033[35m -------------------- install utils -------------------- \033[0m\n"
-sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree ripgrep xclip gettext-base ca-certificates
+sudo apt install -y man info curl wget tar gzip unzip zip git stow nano tree xclip gettext-base ca-certificates
+sudo apt install -y fzf bat ripgrep
 
 
 printf "\033[35m -------------------- stow configuration files -------------------- \033[0m\n"
@@ -71,11 +72,15 @@ if [[ -d ~/.oh-my-zsh ]]; then
     echo ".oh-my-zsh exists, stow'ing custom plugins nad themes"
     backup_file "$HOME/.oh-my-zsh/custom/themes/darkblood-venv.zsh-theme"
     stow -v -t "$HOME/.oh-my-zsh/custom/themes" oh-my-zsh
+    if [[ ! -e "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab" ]]; then
+        git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
+    fi
 else
     echo "installing oh-my-zsh"
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     backup_file "$HOME/.oh-my-zsh/custom/themes/darkblood-venv.zsh-theme"
     stow -v -t "$HOME/.oh-my-zsh/custom/themes" oh-my-zsh
+    git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
 fi
 
 

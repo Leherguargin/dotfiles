@@ -8,7 +8,8 @@ sudo dnf clean all
 
 
 printf "\033[35m --------------------  install utils -------------------- \033[0m\n"
-sudo dnf install -y man info curl wget tar gzip unzip zip git stow nano tree make gcc ripgrep xclip ca-certificates gettext
+sudo dnf install -y man info curl wget tar gzip unzip zip git stow nano tree make gcc xclip ca-certificates gettext
+sudo dnf install -y fzf bat ripgrep
 
 
 printf "\033[35m -------------------- stow configuration files -------------------- \033[0m\n"
@@ -69,6 +70,9 @@ fi
 printf "\033[35m -------------------- install oh-my-zsh -------------------- \033[0m\n"
 if [[ -d ~/.oh-my-zsh ]]; then
     echo ".oh-my-zsh exists"
+    if [[ ! -e "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab" ]]; then
+        git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
+    fi
 else
     echo "installing oh-my-zsh"
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

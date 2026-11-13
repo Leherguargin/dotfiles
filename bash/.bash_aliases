@@ -10,49 +10,41 @@ alias rd='rmdir'
 alias md='mkdir -p'
 alias g='git'
 alias py='python'
+alias cat='batcat' # todo dodaj podpisy do tych aliasów co robią, szczególnie ls itp, ujednolić bash z zsh, usuń bash_alisaes (wszystkoe w zshrc/bashrc)
+alias clip='clipcopy' #TODO probably do not work in bash, move this aliases to .zshrc or .bashrc and remove this file
+#todo ogarnij notatki w konsoli (keenote, dnote???)
+# zbacz impolementację take przez 'which take' w zsh/ohmyzsh, sprawdz jak dziala czyste zsh i co dodaje i inne powłoki oraz w czym są napisane
+# jak działa ripgrep, fzf, narzędzia pythonowe (na koniec)
+# narzędzia find, grep, ls, reszta!
+# dokończ konfigurację zsh/ohmyzsh w .zshrc i wywal śmieci i komentarze z pliku tamtego
+# 
 
-take() {
-	mkdir -p "$1" && cd "$1"
+take () {
+        if [[ $1 =~ ^(https?|ftp).*\.(tar\.(gz|bz2|xz)|tgz)$ ]]
+        then
+                takeurl "$1"
+        elif [[ $1 =~ ^(https?|ftp).*\.(zip)$ ]]
+        then
+                takezip "$1"
+        elif [[ $1 =~ ^([A-Za-z0-9]\+@|https?|git|ssh|ftps?|rsync).*\.git/?$ ]]
+        then
+                takegit "$1"
+        else
+                takedir "$@"
+        fi
 }
 
-if command -v minikube >/dev/null 2>&1; then
+mkcd () {
+        mkdir -p $@ && cd ${@:$#}
+}
+
+if command -v minikube >/dev/null 2>&1; then # look for oh-my-zsh plugins for aliases for minikube etc.
     alias kubectl='minikube kubectl --'
 fi
 
-if command -v tmux >/dev/null 2>&1; then
+if command -v tmux >/dev/null 2>&1; then # look for oh-my-zsh plugins for aliases for tmux
     alias t='tmux attach -t 0 || tmux new -s 0'
 fi
-
-# clipboard managmant with klipper, xclip, xsel and wl-copy
-clip() {
-    local filtered
-    if [ -n "$1" ]; then # first argument is pattern for grep
-        filtered=$(grep "$1" | head -n 1) # read stdin, grep by first arg and take first match
-    else
-        filtered=$(cat) # only read stdin
-    fi
-
-    # Copy to KDE clipboard if qdbus is available TODO maybe sort it and use if-else and write also paste command with apropiate command (i napisz instrukcje do wszytkich w instrukcji z testami rodzajów buforow)
-    if command -v qdbus >/dev/null 2>$1; then
-        qdbus org.kde.klipper /klipper setClipboardContents "$filtered"
-    fi
-
-    # Copy to xclip if xclip is available
-    if command -v xclip >/dev/null 2>&1; then
-        echo "$filtered" | xclip -i # working with primary bufffer (selected text)
-        echo "$filtered" | xclip -selection clipboard # working with clipboard buffer (copied text)
-    fi
-
-    # Copy to Wayland clipboard if wl-copy is available
-    if command -v wl-copy >/dev/null 2>&1; then
-        echo "$filtered" | wl-copy
-    fi
-
-    # Copy to xsel if xclip is available
-    if command -v xsel >/dev/null 2>&1; then
-        echo "$filtered" | xsel --clipboard --input
-    fi
-}
 
 readln() {
     grep "$1" | head -n 1
