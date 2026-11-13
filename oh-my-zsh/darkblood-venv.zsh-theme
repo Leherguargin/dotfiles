@@ -62,12 +62,18 @@ set_prompt() {
     PROMPT+="$(git_prompt_info)"
     PROMPT+="${error_block}"
     PROMPT+=$'\n'
-    PROMPT+="${RED}└[${WHITE}${current_dir}${RED}]>${RESET}"
+    PROMPT+="${RED}└[${WHITE}${current_dir}${RED}]>${RESET} "
+
+    local expanded_dir=$(print -P "%~")
+    local len=${#expanded_dir}
+    local spaces="${(l:$len:: :)}"
+    PS2="  ${spaces}${RED}|>${RESET} "
 }
+
+# timer plugin config
+TIMER_PRECISION=3
+TIMER_FORMAT='%d'
 
 # add hook for reload prompt each time
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd set_prompt
-
-# SECONDARY PROMPT
-PS2=$' ${RED}|>${RESET} '
