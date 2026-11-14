@@ -69,7 +69,7 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 
 # doc here: https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins-Overview
 plugins=(
-  # git # aliases for version control system git
+  git # aliases for version control system git
   fzf # alisase for fuzzy find tool fzf
   fzf-tab # all tab completitions done by fzf
   copyfile # integrate with omz built-in clipcopy for files

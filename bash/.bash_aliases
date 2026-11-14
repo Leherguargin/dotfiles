@@ -1,16 +1,12 @@
-alias l='ls -lFh'
+alias l='ls -lFh' # todo dodaj podpisy do tych aliasów co robią, szczególnie ls itp, ujednolić bash z zsh
 alias ll='ls -AlFh'
-alias tree='tree -l'
-alias c='clear'
 alias update='sudo apt update && sudo apt full-upgrade -y'
 alias gui='sudo systemctl isolate graphical.target' # for set to boot gui as default: 'sudo systemctl set-default graphical.target'
 alias cli='sudo systemctl isolate multi-user.target'
 alias unlock='loginctl unlock-session 1' # for bugged KDE plasma
 alias rd='rmdir'
 alias md='mkdir -p'
-alias g='git'
 alias py='python'
-alias cat='batcat' # todo dodaj podpisy do tych aliasów co robią, szczególnie ls itp, ujednolić bash z zsh, usuń bash_alisaes (wszystkoe w zshrc/bashrc)
 alias clip='clipcopy' #TODO probably do not work in bash, move this aliases to .zshrc or .bashrc and remove this file
 #todo ogarnij notatki w konsoli (keenote, dnote???)
 # zbacz impolementację take przez 'which take' w zsh/ohmyzsh, sprawdz jak dziala czyste zsh i co dodaje i inne powłoki oraz w czym są napisane
@@ -20,18 +16,17 @@ alias clip='clipcopy' #TODO probably do not work in bash, move this aliases to .
 # 
 
 take () {
-        if [[ $1 =~ ^(https?|ftp).*\.(tar\.(gz|bz2|xz)|tgz)$ ]]
-        then
-                takeurl "$1"
-        elif [[ $1 =~ ^(https?|ftp).*\.(zip)$ ]]
-        then
-                takezip "$1"
-        elif [[ $1 =~ ^([A-Za-z0-9]\+@|https?|git|ssh|ftps?|rsync).*\.git/?$ ]]
-        then
-                takegit "$1"
-        else
-                takedir "$@"
-        fi
+    if [[ $1 =~ ^(https?|ftp).*\.(tar\.(gz|bz2|xz)|tgz)$ ]]; then
+            takeurl "$1"
+    elif [[ $1 =~ ^(https?|ftp).*\.(zip)$ ]]
+    then
+            takezip "$1"
+    elif [[ $1 =~ ^([A-Za-z0-9]\+@|https?|git|ssh|ftps?|rsync).*\.git/?$ ]]
+    then
+            takegit "$1"
+    else
+            takedir "$@"
+    fi
 }
 
 mkcd () {
