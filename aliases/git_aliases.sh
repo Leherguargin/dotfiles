@@ -33,10 +33,10 @@ alias gcl='git clone --recurse-submodules' # clone with updating submodules
 alias gclf='git clone --recursive --shallow-submodules --filter=blob:none --also-filter-submodules' # for large projects
 
 alias gcf='git config --list' # display all configs for current context
-alias gclean='git clean --interactive -d' # interactive cleaning working dir from untracking files
+alias gclean='git clean --interactive -d' # interactive cleaning working tree from untracking files
 alias gcount='git shortlog --summary --numbered' # displays list of people working for this repo
 
-alias gd='git diff' # files modified in working directory (before git add)
+alias gd='git diff' # files modified in working tree (before git add)
 alias gdw='git diff --word-diff' # words and letters, not lines only
 alias gdca='git diff --cached' # files modified in staging area (after git add, before commit)
 alias gdcw='git diff --cached --word-diff' # words and letters, not lines only
@@ -53,8 +53,8 @@ alias glog='git log --oneline --decorate --graph' # graph of commits with hash, 
 alias gloga='git log --oneline --decorate --graph --all' # graph of commits with all info
 alias glg='git log --stat' # list of commits with info about author, date, message, changed lines
 alias glgp='git log --stat --patch' # list of commits with full info about each one
-alias glgg='git log --graph' # graph of commits with full info
-gwch='git log --patch --abbrev-commit --pretty=medium --raw' #// TODO ???????????????????????????????????????????????????????????????????????????????????????????????
+alias glgg='git log --graph' # graph of commits
+alias gwch='git log --patch --abbrev-commit --pretty=medium --raw' # 7-10 char hash, author, date, message, file modifications, paths
 
 alias gl='git pull' # fetch from remote and merge to current branch (creating single merge commit)
 alias gpr='git pull --rebase' # fetch from remote and merge to current branch (moving current branch commits to the top)
@@ -76,11 +76,11 @@ alias gpoat='git push origin --all && git push origin --tags' # push all local b
 alias gpod='git push origin --delete' # delete branch on upstream
 alias gpu='git push upstream' # push to upstream, not your fork
 
-alias grh='git reset' # return files from staging area to working dir
-alias gru='git reset --' # for defined files, move them from staging area to working dir
-alias grhs='git reset --soft' # remove everything to defined commit and move it's changes to working dir (leaves staging area unchanged) // TODO do sprawdzenia ??????????????????????????
+alias grh='git reset' # return files from staging area to working tree
+alias gru='git reset --' # for defined files, move them from staging area to working tree
+alias grhs='git reset --soft' # remove everything to defined commit and move it's changes to working tree (leaves staging area unchanged)
 alias grhk='git reset --keep' # remove everything to defined commit, but try to keep local changes (abort if not possible)
-alias grhh='git reset --hard' # remove everything from HEAD to defined commit (removes also changes in working dir and staging area)
+alias grhh='git reset --hard' # remove everything from HEAD to defined commit (removes also changes in working tree and staging area)
 
 alias gr='git remote'
 alias gra='git remote add' # add new remote repo (gra origin <url>)
@@ -92,7 +92,7 @@ alias grset='git remote set-url' # change remote repo address
 
 alias grb='git rebase'
 alias grbi='git rebase --interactive' # interactive rebase provide possibility to squash(join), reorder, edit message or delete commits
-alias grbo='git rebase --onto' # provide option to copy commits from other branch on new base                         //todo??????????????????????????
+alias grbo='git rebase --onto' # provide option to copy commits from other branch on new base
 alias grba='git rebase --abort' # stop rebase and return to state before rebase
 alias grbc='git rebase --continue' # continue rebase after conflicts solved and added
 alias grbs='git rebase --skip' # skip commit which has unsolvable conflict while rebase
@@ -101,54 +101,50 @@ alias grev='git revert' # create commit with undo changes in defined commit
 alias greva='git revert --abort' # abort reverting
 alias grevc='git revert --continue' # continue revert after conflicts solved and added
 
-grf='git reflog'
+alias grf='git reflog' # show register of each move and command in git
 
-grm='git rm'
-grmc='git rm --cached'
+alias grm='git rm' # remove file from git and filesystem
+alias grmc='git rm --cached' # remove file from staging area and git track
 
-grs='git restore'
-grss='git restore --source'
-grst='git restore --staged'
+alias grs='git restore'
+alias grst='git restore --staged' # remove file from staging area (reverse git add)
+alias grss='git restore --source' # revert file from given source (commit hash)
 
-gsh='git show'
-gshs='git show --stat'
-gsps='git show --pretty=short --show-signature'
+alias gsh='git show' # info about commit (last or given by hash or alias)
+alias gshs='git show --stat' # only changed files in commit
+alias gsps='git show --pretty=short --show-signature' # short version
 
-gsd='git svn dcommit'
-gsr='git svn rebase'
+alias gst='git status' # status of changed files, commits, added files (all about local repo changes)
+alias gss='git status --short' # short version with files listen only
+alias gsb='git status --short --branch' # short version plus info about branch (name and relation with remote)
+alias gsnut='git status --untracked-files=no' # skip untraced filed (for big repos)
 
-gsnut='git status --untracked-files=no'
-gsb='git status --short --branch'
-gss='git status --short'
-gst='git status'
+alias gsta='git stash push' # push changes to stack (you can name them: -m "name")
+alias gstp='git stash pop' # pop changes from stack and merge with current changes
+alias gstaa='git stash apply' # copy last stashed changes and merge with current (do not remove from stash)
+alias gstall='git stash --all' # push all changes (also untracked and ignored)
+alias gstc='git stash clear' # clear stash stack
+alias gstd='git stash drop' # remove given/last stashed object
+alias gstl='git stash list' # print stash
+alias gsts='git stash show --patch' # show diff between stash and working tree
 
-gsta='git stash push'
-gstaa='git stash apply'
-gstall='git stash --all'
-gstc='git stash clear'
-gstd='git stash drop'
-gstl='git stash list'
-gstp='git stash pop'
-gsts='git stash show --patch'
+alias gsi='git submodule init' # init
+alias gsu='git submodule update'
+alias gsuri='git submodule update --recursive --init'
 
-gsi='git submodule init'
-gsu='git submodule update'
-gsuri='git submodule update --recursive --init'
+alias gsw='git switch' # switch to given branch
+alias gswc='git switch --create' # create branch and switch to it
 
-gsw='git switch'
-gswc='git switch --create'
+alias gtv='git tag | sort -V' # 
+alias gta='git tag --annotate' # crate annotated tag
+alias gts='git tag --sign' # crate signed tag
+alias gtl='gtl(){ git tag --sort=-v:refname -n --list "${1}*" }; noglob gtl' # function for list sorted tags with filtering
 
-gta='git tag --annotate'
-gtl='gtl(){ git tag --sort=-v:refname -n --list "${1}*" }; noglob gtl'
-gts='git tag --sign'
-gtv='git tag | sort -V'
-gunignore='git update-index --no-assume-unchanged'
-gunwip='git rev-list --max-count=1 --format="%s" HEAD | grep -q "\--wip--" && git reset HEAD~1'
-gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign --message "--wip-- [skip ci]"'
-gwipe='git reset --hard && git clean --force -df'
+alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign --message "--wip-- [skip ci]"' # work in progress commit
+alias gunwip='git rev-list --max-count=1 --format="%s" HEAD | grep -q "\--wip--" && git reset HEAD~1' # undo work in progress commit
 
-gwt='git worktree'
-gwta='git worktree add'
-gwtls='git worktree list'
-gwtmv='git worktree move'
-gwtrm='git worktree remove'
+alias gwt='git worktree' # open two directories with same repo (same history, diffrent branches)
+alias gwta='git worktree add' # add new worktree to existing local git repo
+alias gwtls='git worktree list' # list all directories (worktrees) with opened branches and commits in them
+alias gwtmv='git worktree move' # move worktree (and references in .git)
+alias gwtrm='git worktree remove' # remove worktree (and references in .git)
